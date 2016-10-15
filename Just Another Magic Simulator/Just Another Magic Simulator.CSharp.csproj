@@ -76,6 +76,8 @@
     <Compile Include="Assets\Logic\Cards\A\AetherHub.cs" />
     <Compile Include="Assets\Logic\Cards\Card.cs" />
     <Compile Include="Assets\Logic\Cards\CardObject.cs" />
+    <Compile Include="Assets\Logic\DeckController.cs" />
+    <Compile Include="Assets\Logic\DeckGetter.cs" />
     <Compile Include="Assets\Logic\SimpleJSON.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
