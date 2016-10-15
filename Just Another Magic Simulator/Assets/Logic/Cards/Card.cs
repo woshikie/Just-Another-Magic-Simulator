@@ -2,6 +2,7 @@
 using SimpleJSON;
 using System.Threading;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Card
 {
@@ -29,18 +30,24 @@ namespace Card
         }
         private static void CrawlerTask(Card Output)
         {
-            const string URL_PREFIX = "https://api.deckbrew.com/mtg/cards/"; //using deckbrew API!
+            const string URL_PREFIX = "http://api.deckbrew.com/mtg/cards/"; //using deckbrew API!
             string URL = URL_PREFIX + Output.CardID;
-            WWW www = new WWW(URL);
-            while (!www.isDone) ;
-            JSONNode node = JSON.Parse(www.text);
+            string data = new WebClient().DownloadString(URL);
+            JSONNode node = JSON.Parse(data);
             if (string.IsNullOrEmpty(node["errors"].ToString()))//no error!
             {
                 Output.CardDescription = node["text"].ToString();
-                URL = node["image_url"].ToString();
-                www = new WWW(URL);
-                while (!www.isDone) ;
-                Output.CardImage = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+                var EditionArrays = node["editions"].AsArray;
+                JSONNode LatestEdition = EditionArrays[0];
+                for (int i = 1; i < EditionArrays.Count; i++){
+                    if (LatestEdition["multiverse_id"].AsInt < EditionArrays[i]["multiverse_id"].AsInt){
+                        LatestEdition = EditionArrays[i];
+                    }
+                }
+                URL = LatestEdition["image_url"];
+                URL = URL.Replace("https", "http");
+                byte[] RetrievedData = new WebClient().DownloadData(URL);
+                Output.CardImageRaw = RetrievedData;
             }
             return;
         }
@@ -48,16 +55,28 @@ namespace Card
     }
     public class Card
     {
-        private Sprite _CardImage = DefaultCardImage.Img;
+        private Sprite _CardImage;
         public Sprite CardImage
         {
-            get { return _CardImage; }
+            get {
+                if (_CardImageRaw != null){
+                    Texture2D texture = new Texture2D(0, 0);
+                    texture.LoadImage(CardImageRaw);
+                    _CardImage = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                }
+                return _CardImage;
+            }
             internal set { _CardImage = value; }
+        }
+        private byte[] _CardImageRaw;
+        public byte[] CardImageRaw {
+            get { return _CardImageRaw; }
+            internal set { _CardImageRaw = value; }
         }
         private string _CardDescription = "";
         public string CardDescription
         {
-            get { return CardDescription; }
+            get { return _CardDescription; }
             internal set { _CardDescription = value; }
         }
         public readonly string CardName;
@@ -67,7 +86,12 @@ namespace Card
         }
         public Card(string CardName)
         {
-            this.CardName = CardName;   
-        }    
+            this.CardName = CardName;
+            //CardCrawler.Crawler(this);
+        }
+        public virtual void OnUpkeep() { }
+        public virtual void OnDraw() { }
+        public virtual void OnLandEnter() { }
+        public virtual void OnEnterBattlefield() { }
     }
 }
