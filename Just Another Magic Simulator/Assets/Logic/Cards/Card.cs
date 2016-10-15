@@ -21,7 +21,7 @@ namespace Card
     }
     static class CardCrawler
     {
-        readonly static List<Thread>  ListCrawler = new List<Thread>();
+        public readonly static List<Thread>  ListCrawler = new List<Thread>();
         public static void Crawler(Card Output)
         {
             Thread crawler = new Thread(() => CrawlerTask(Output));
@@ -32,6 +32,7 @@ namespace Card
         {
             const string URL_PREFIX = "http://api.deckbrew.com/mtg/cards/"; //using deckbrew API!
             string URL = URL_PREFIX + Output.CardID;
+            Debug.Log(URL);
             string data = new WebClient().DownloadString(URL);
             JSONNode node = JSON.Parse(data);
             if (string.IsNullOrEmpty(node["errors"].ToString()))//no error!
@@ -55,6 +56,9 @@ namespace Card
     }
     public class Card
     {
+        public static string CardNameToID(string Card) {
+            return Card.ToLower().Replace("'", "").Replace(' ', '-');
+        }
         private Sprite _CardImage;
         public Sprite CardImage
         {
@@ -82,7 +86,7 @@ namespace Card
         public readonly string CardName;
         public string CardID
         {
-            get { return CardName.ToLower().Replace(' ', '-'); }
+            get { return CardNameToID(CardName); }
         }
         public Card(string CardName)
         {

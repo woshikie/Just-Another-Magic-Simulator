@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CardObject : MonoBehaviour {
     [SerializeField]
     Image Front, Back;
-    Card.Card card;
+    Card.Card card = new Card.AetherHub();
 	// Use this for initialization
 	void Start () {
         Card.CardCrawler.Crawler(card);
