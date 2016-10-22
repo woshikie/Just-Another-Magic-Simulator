@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Linq;
+using System;
+using System.Collections;
 
 namespace Card
 {
@@ -21,21 +23,33 @@ namespace Card
             }
         }
     }
-    static class CardCrawler
+    public static class CardCrawler
     {
-        public readonly static List<Thread>  ListCrawler = new List<Thread>();
-        public static void Crawler(Card Output)
+        public class ImageCacheUnit
         {
-            Thread crawler = new Thread(() => CrawlerTask(Output));
-            ListCrawler.Add(crawler);
-            crawler.Start();
+            private bool _isDone = false;
+            public bool isDone
+            {
+                get { return _isDone; }
+                internal set { _isDone = value; }
+            }
+
+            private byte[] _data = null;
+            public byte[] data
+            {
+                get { return _data; }
+                internal set { _data = value; }
+            }
         }
-        private static void CrawlerTask(Card Output)
+        public static Dictionary<int, ImageCacheUnit> CachedList = new Dictionary<int, ImageCacheUnit>();
+        public static IEnumerator CrawlerTask(Card Output, Action OnDone)
         {
             const string URL_PREFIX = "http://api.deckbrew.com/mtg/cards/"; //using deckbrew API!
             string URL = URL_PREFIX + Output.CardID;
-            Debug.Log(URL);
-            string data = new WebClient().DownloadString(URL);
+            //Debug.Log(URL);
+            WWW www = new WWW(URL);
+            yield return www;
+            string data = www.text;
             JSONNode node = JSON.Parse(data);
             if (string.IsNullOrEmpty(node["errors"].ToString()))//no error!
             {
@@ -47,12 +61,29 @@ namespace Card
                         LatestEdition = EditionArrays[i];
                     }
                 }
-                URL = LatestEdition["image_url"];
-                URL = URL.Replace("https", "http");
-                byte[] RetrievedData = new WebClient().DownloadData(URL);
-                Output.CardImageRaw = RetrievedData;
+                int Card_ID = LatestEdition["multiverse_id"].AsInt;
+                //Check if image is Already in the list
+                if (CachedList.ContainsKey(Card_ID)){
+                    while (!CachedList[Card_ID].isDone) yield return new WaitForEndOfFrame();
+                    Output.CardImageRaw = CachedList[Card_ID].data;
+                }
+                else{
+                    ImageCacheUnit unit = new ImageCacheUnit();
+
+                    CachedList.Add(Card_ID, unit);
+                    URL = LatestEdition["image_url"];
+                    URL = URL.Replace("https", "http");
+                    www = new WWW(URL);
+                    yield return www;
+                    byte[] RetrievedData = www.bytes;
+                    Output.CardImageRaw = RetrievedData;
+
+                    unit.data = RetrievedData;
+                    unit.isDone = true;
+                }
+                OnDone();
             }
-            return;
+            yield return null;
         }
         
     }
@@ -69,6 +100,7 @@ namespace Card
                     Texture2D texture = new Texture2D(0, 0);
                     texture.LoadImage(CardImageRaw);
                     _CardImage = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    _CardImageRaw = null;
                 }
                 return _CardImage;
             }

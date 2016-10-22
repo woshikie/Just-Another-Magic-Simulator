@@ -10,15 +10,29 @@ namespace Deck
         List<string> mainboard = new List<string>();
         [SerializeField]
         List<string> sideboard = new List<string>();
+        [SerializeField]
+        GameObject CardPrefeb, Parent;
         //For testing
         [SerializeField]
         const string PastebinCode = "cx1381gj";
-        private Deck myDeck = new Deck();
+        [SerializeField]
+        Deck myDeck = new Deck();
         // Use this for initialization
         void Start()
         {
             //Get Deck list from API
-            DeckGetter.PasteBinCrawler(PastebinCode, myDeck);
+            StartCoroutine(DeckGetter.PasteBinCrawlerTask(PastebinCode, myDeck, delegate
+            {
+                //spawn!
+                for (int i = 0; i < myDeck.MainBoard.Count; i++){
+                    GameObject GO = Instantiate(CardPrefeb);
+                    GO.GetComponent<CardObject>().SetCard(myDeck.MainBoard[i]);
+                    GO.transform.SetParent(Parent.transform);
+                    GO.transform.position = new Vector3(i * 20, 100);
+                }
+            }
+            ));
+
         }
 
         // Update is called once per frame
