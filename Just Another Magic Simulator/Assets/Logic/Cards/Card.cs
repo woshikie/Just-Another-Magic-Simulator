@@ -25,6 +25,7 @@ namespace Card
     }
     public static class CardCrawler
     {
+        public static bool UseBFZLands = true, RandomizeLands = true;
         public class ImageCacheUnit
         {
             private bool _isDone = false;
@@ -53,11 +54,16 @@ namespace Card
             JSONNode node = JSON.Parse(data);
             if (string.IsNullOrEmpty(node["errors"].ToString()))//no error!
             {
-                Output.CardDescription = node["text"].ToString();
-                var EditionArrays = node["editions"].AsArray;
+                //Save data
+                Output.CardData = node;
+                Output.CardDescription = node["text"];
+                
+                JSONArray EditionArrays = node["editions"].AsArray;
                 JSONNode LatestEdition = EditionArrays[0];
-                for (int i = 1; i < EditionArrays.Count; i++){
-                    if (LatestEdition["multiverse_id"].AsInt < EditionArrays[i]["multiverse_id"].AsInt){
+                for (int i = 1; i < EditionArrays.Count; i++)
+                {
+                    if (LatestEdition["multiverse_id"].AsInt < EditionArrays[i]["multiverse_id"].AsInt)
+                    {
                         LatestEdition = EditionArrays[i];
                     }
                 }
@@ -89,6 +95,29 @@ namespace Card
     }
     public class Card
     {
+        public enum SuperType
+        {
+            basic,
+            legendary,
+            ongoing,
+            snow,
+            world
+        }
+        public enum Rarity
+        {
+            basic,
+            common,
+            uncommon,
+            rare,
+            mythic,
+            special,
+            other
+        }
+        private Rarity _CardRarity = Rarity.other;
+        public Rarity CardRarity{
+            get { return _CardRarity; }
+            internal set { _CardRarity = value; }
+        }
         public static string CardNameToID(string Card) {
             return (new string(Card.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ","-").ToLower();
         }
@@ -105,6 +134,11 @@ namespace Card
                 return _CardImage;
             }
             internal set { _CardImage = value; }
+        }
+        private JSONNode _CardData = null;
+        public JSONNode CardData{
+            get { return _CardData; }
+            internal set { _CardData = value; }
         }
         private byte[] _CardImageRaw;
         public byte[] CardImageRaw {
@@ -127,6 +161,7 @@ namespace Card
             this.CardName = CardName;
             //CardCrawler.Crawler(this);
         }
+
         public virtual void OnUpkeep() { }
         public virtual void OnDraw() { }
         public virtual void OnLandEnter() { }

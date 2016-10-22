@@ -11,7 +11,7 @@ public class MyRandom
         const string dictionary = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         string output = "";
         do{
-            int index = UnityEngine.Random.Range(0, dictionary.Length - 1);
+            int index = UnityEngine.Random.Range(0, dictionary.Length);
             output += dictionary[index];
         } while (--length != 0);
         return output;
