@@ -3,6 +3,8 @@ using SimpleJSON;
 using System.Threading;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
+using System.Linq;
 
 namespace Card
 {
@@ -57,7 +59,7 @@ namespace Card
     public class Card
     {
         public static string CardNameToID(string Card) {
-            return Card.ToLower().Replace("'", "").Replace(' ', '-');
+            return (new string(Card.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ","-").ToLower();
         }
         private Sprite _CardImage;
         public Sprite CardImage

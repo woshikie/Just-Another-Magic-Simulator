@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -75,9 +73,107 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Logic\Cards\A\AccomplishedAutomaton.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AcrobaticManeuver.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AerialResponder.cs" />
     <Compile Include="Assets\Logic\Cards\A\AetherHub.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherMeltdown.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherTheorist.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherTradewinds.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherbornMarauder.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherfluxReservoir.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AethersquallAncient.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherstormRoc.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AethertorchRenegade.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AetherworksMarvel.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AmbitiousAetherborn.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AngelofInvention.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AnimationModule.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AppetitefortheUnnatural.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AradaraExpress.cs" />
+    <Compile Include="Assets\Logic\Cards\A\ArborbackStomper.cs" />
+    <Compile Include="Assets\Logic\Cards\A\ArchitectoftheUntamed.cs" />
+    <Compile Include="Assets\Logic\Cards\A\ArmorcraftJudge.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AttunewithAether.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AuthorityoftheConsuls.cs" />
+    <Compile Include="Assets\Logic\Cards\A\AviaryMechanic.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BallistaCharger.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BastionMastodon.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BloomingMarsh.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BlossomingDefense.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BomatBazaarBarge.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BomatCourier.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BotanicalSanctum.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BrazenScourge.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BristlingHydra.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BuilttoLast.cs" />
+    <Compile Include="Assets\Logic\Cards\B\BuilttoSmash.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CapturedbytheConsulate.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CataclysmicGearhulk.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CatharticReunion.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CeremoniousRejection.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ChandraPyrogenius.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ChandraTorchofDefiance.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ChandrasPyrohelix.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ChiefoftheFoundry.cs" />
+    <Compile Include="Assets\Logic\Cards\C\Cloudblazer.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CogworkersPuzzleknot.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CombustibleGearhulk.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CommencementofFestivities.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ConcealedCourtyard.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ConfiscationCoup.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ConsulateSkygate.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ConsulateSurveillance.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ConsulsShieldguard.cs" />
+    <Compile Include="Assets\Logic\Cards\C\ContrabandKingpin.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CowlProwler.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CreepingMold.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CultivatorofBlades.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CultivatorsCaravan.cs" />
+    <Compile Include="Assets\Logic\Cards\C\CurioVendor.cs" />
     <Compile Include="Assets\Logic\Cards\Card.cs" />
     <Compile Include="Assets\Logic\Cards\CardObject.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DeadlockTrap.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DecoctionModule.cs" />
+    <Compile Include="Assets\Logic\Cards\D\Demolish.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DemolitionStomper.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DemonofDarkSchemes.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DepalaPilotExemplar.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DhundOperative.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DiabolicTutor.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DieYoung.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DisappearingAct.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DovinBaan.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DramaticReversal.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DubiousChallenge.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DukharaPeafowl.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DukharaScavenger.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DurableHandicraft.cs" />
+    <Compile Include="Assets\Logic\Cards\D\DynavoltTower.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EagerConstruct.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EddytrailHawk.cs" />
+    <Compile Include="Assets\Logic\Cards\E\ElectrostaticPummeler.cs" />
+    <Compile Include="Assets\Logic\Cards\E\ElegantEdgecrafters.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EliminatetheCompetition.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EmbraalBruiser.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EmpyrealVoyager.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EngineeredMight.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EraofInnovation.cs" />
+    <Compile Include="Assets\Logic\Cards\E\EssenceExtraction.cs" />
+    <Compile Include="Assets\Logic\Cards\E\ExperimentalAviator.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FabricationModule.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FailedInspection.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FairgroundsTrumpeter.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FairgroundsWarden.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FatefulShowdown.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FiligreeFamiliar.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FireforgersPuzzleknot.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FlameLash.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FleetwheelCruiser.cs" />
+    <Compile Include="Assets\Logic\Cards\F\Forest.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FortuitousFind.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FoundryInspector.cs" />
+    <Compile Include="Assets\Logic\Cards\F\FoundryScreecher.cs" />
+    <Compile Include="Assets\Logic\Cards\Æ\ÆtherTradewinds.cs" />
     <Compile Include="Assets\Logic\Deck\Deck.cs" />
     <Compile Include="Assets\Logic\Deck\DeckController.cs" />
     <Compile Include="Assets\Logic\Deck\DeckGetter.cs" />
