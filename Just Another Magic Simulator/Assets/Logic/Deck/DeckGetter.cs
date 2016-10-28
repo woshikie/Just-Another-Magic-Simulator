@@ -34,7 +34,12 @@ namespace Deck
                     if (cardcount == 0) continue;
                     //Get card name
                     string cardname = line.Substring(line.IndexOf(' ') + 1);
-                    while (cardcount-- != 0) output.Sideboard.Add(new Card.Card(cardname));
+                    Type card = Type.GetType(Card.Card.CardNameToClass(cardname));
+                    if (card == null){
+                        Debug.LogErrorFormat("unable to find class for card: {0}. Expected classname: {1}",cardname, Card.Card.CardNameToClass(cardname));
+                    }else{
+                        while (cardcount-- != 0) output.Sideboard.Add(Activator.CreateInstance(card) as Card.Card);
+                    }
                 }
             }
             //Read mainboard
@@ -50,7 +55,16 @@ namespace Deck
                 if (cardcount == 0) continue;
                 //get card name;
                 string cardname = line.Substring(line.IndexOf(' ') + 1);
-                while (cardcount-- != 0) output.MainBoard.Add(new Card.Card(cardname));
+                Type card = Type.GetType(Card.Card.CardNameToClass(cardname));
+                if (card == null)
+                {
+                    Debug.LogErrorFormat("unable to find class for card: {0}. Expected classname: {1}", cardname, Card.Card.CardNameToClass(cardname));
+                }
+                else
+                {
+                    while (cardcount-- != 0) output.MainBoard.Add(Activator.CreateInstance(card) as Card.Card);
+                }
+                //while (cardcount-- != 0) output.MainBoard.Add(new Card.Card(cardname));
             }
             OnDone();
             yield return null;

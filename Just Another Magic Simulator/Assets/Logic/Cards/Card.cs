@@ -118,8 +118,11 @@ namespace Card
             get { return _CardRarity; }
             internal set { _CardRarity = value; }
         }
-        public static string CardNameToID(string Card) {
-            return (new string(Card.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ","-").ToLower();
+        public static string CardNameToID(string CardName) {
+            return (new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "-").ToLower();
+        }
+        public static string CardNameToClass(string CardName){
+            return "Card."+(new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "");
         }
         private Sprite _CardImage;
         public Sprite CardImage
