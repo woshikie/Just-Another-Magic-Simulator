@@ -95,6 +95,14 @@ namespace Card
     }
     public class Card
     {
+        public static string CardNameToID(string CardName)
+        {
+            return (new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "-").ToLower();
+        }
+        public static string CardNameToClass(string CardName)
+        {
+            return "Card." + (new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "");
+        }
         public enum SuperType
         {
             basic,
@@ -118,12 +126,14 @@ namespace Card
             get { return _CardRarity; }
             internal set { _CardRarity = value; }
         }
-        public static string CardNameToID(string CardName) {
-            return (new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "-").ToLower();
-        }
-        public static string CardNameToClass(string CardName){
-            return "Card."+(new string(CardName.Where(c => !char.IsPunctuation(c)).ToArray())).Replace(" ", "");
-        }
+
+        private string[] _Types, _SuperTypes, _SubTypes, _Colors;
+        public string[] Types{ get { return _Types; } protected set { _Types = value; } }
+        public string[] SuperTypes { get { return _SuperTypes; } protected set { _SuperTypes = value; } }
+        public string[] SubTypes { get { return _SubTypes; } protected set { _SubTypes = value; } }
+        public string[] Colors { get { return _Colors; } protected set { _Colors = value; } }
+
+        
         private Sprite _CardImage;
         public Sprite CardImage
         {
@@ -138,32 +148,51 @@ namespace Card
             }
             internal set { _CardImage = value; }
         }
+
         private JSONNode _CardData = null;
         public JSONNode CardData{
             get { return _CardData; }
             internal set { _CardData = value; }
         }
+
         private byte[] _CardImageRaw;
         public byte[] CardImageRaw {
             get { return _CardImageRaw; }
             internal set { _CardImageRaw = value; }
         }
+
         private string _CardDescription = "";
         public string CardDescription
         {
             get { return _CardDescription; }
             internal set { _CardDescription = value; }
         }
-        public readonly string CardName;
+
+        public string LatestSetID {
+            get {
+                if (CardData == null) return "NULL";
+                JSONArray Editions = CardData["editions"].AsArray;
+                string SET_ID = Editions[0]["set_id"];
+                for (int i = 1; i < Editions.Count; i++){
+                    if (int.Parse(Editions[i]["set_id"]) > int.Parse(SET_ID)) SET_ID = Editions[i]["set_id"];
+                }
+                return SET_ID;
+            }
+        }
+        
         public string CardID
         {
             get { return CardNameToID(CardName); }
         }
+
+        public readonly string CardName;
         public Card(string CardName)
         {
             this.CardName = CardName;
-            //CardCrawler.Crawler(this);
+            OnConstructed();
         }
+
+        protected virtual void OnConstructed() { }
 
         public virtual void OnUpkeep() { }
         public virtual void OnDraw() { }
